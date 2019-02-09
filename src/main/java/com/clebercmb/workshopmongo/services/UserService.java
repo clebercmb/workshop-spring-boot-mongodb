@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.clebercmb.workshopmongo.domain.User;
+import com.clebercmb.workshopmongo.dto.UserDTO;
 import com.clebercmb.workshopmongo.repository.UserRepository;
 import com.clebercmb.workshopmongo.services.exception.ObjectNotFoundException;
 
@@ -23,7 +24,15 @@ public class UserService {
 	public User findById(String id) {
 		Optional<User> obj = repo.findById(id);
 		
-		System.out.println(">>>>"+obj);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
 	}
+	
+	public User insert(User user) {
+		return repo.insert(user);
+	}
+	
+	public User userFromDTO(UserDTO objDto) {
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}
+	
 }
