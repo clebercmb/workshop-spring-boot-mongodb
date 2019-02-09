@@ -64,5 +64,15 @@ public class UserResource {
 		return ResponseEntity.noContent().build(); //This operation returns nothing. When it happens, the return code is 204
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+		var user = service.userFromDTO(objDto);
+		user.setId(id);
+		
+		user = service.update(user);
+		
+		return ResponseEntity.noContent().build(); 	
+	}	
+	
 	
 }
