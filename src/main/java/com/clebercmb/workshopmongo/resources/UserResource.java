@@ -2,6 +2,7 @@ package com.clebercmb.workshopmongo.resources;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clebercmb.workshopmongo.domain.User;
+
+import com.clebercmb.workshopmongo.dto.UserDTO;
 import com.clebercmb.workshopmongo.services.UserService;
 
 @RestController
@@ -21,10 +23,11 @@ public class UserResource {
 	private UserService service;  // Injection service
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		
 		var userList = service.findAll(); 
+		var listDto = userList.stream().map(p -> new UserDTO(p)).collect(Collectors.toList());
 				
-		return ResponseEntity.ok().body(userList);
+		return ResponseEntity.ok().body(listDto);
 	}
 }
