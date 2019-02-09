@@ -55,5 +55,14 @@ public class UserResource {
 													//and a header having the location of the new resource created
 														
 	}	
+
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) //End point path to get user by id. Path = /users/id
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		
+		service.delete(id);
+				
+		return ResponseEntity.noContent().build(); //This operation returns nothing. When it happens, the return code is 204
+	}
+	
 	
 }
